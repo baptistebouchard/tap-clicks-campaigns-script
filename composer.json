@@ -9,7 +9,7 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "php": "^7.0",
+        "php": "^7.1",
         "doctrine/orm": "2.5.x-dev",
         "nicolab/php-ftp-client": "dev-master",
         "symfony/yaml": "3.4.x-dev",
