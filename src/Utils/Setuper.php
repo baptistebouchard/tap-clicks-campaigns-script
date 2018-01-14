@@ -50,7 +50,7 @@ class Setuper
     public function getConfig($env = 'dev')
     {
         try {
-            return Yaml::parseFile(__DIR__ . "/../config/config.{$env}.yml");
+            return Yaml::parseFile(__DIR__ . "/../Config/config.{$env}.yml");
         } catch(ParseException $exception) {
             $this->stdOutLogger->error('Config Parsing Error!');
             throw $exception;
