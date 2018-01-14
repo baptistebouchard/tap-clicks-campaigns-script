@@ -11,7 +11,7 @@
 * Tests: [PhpUnit](https://phpunit.de/)
 
 ### Install
-You will need php7.0. and A Mysql Database with the schema given already imported
+You will need php-7.1 and A Mysql Database with the schema given already imported
 ```
 php composer.phar install
 ```
