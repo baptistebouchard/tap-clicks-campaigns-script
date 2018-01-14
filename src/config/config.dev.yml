@@ -1,0 +1,9 @@
+database:
+  driver: 'pdo_mysql'
+  dbname: 'tap-clicks'
+  user: 'root'
+  host: 'localhost'
+
+ftp:
+  host: 'ftp.clickfuel.com'
+  identifier: 'ftp_integration_test'
