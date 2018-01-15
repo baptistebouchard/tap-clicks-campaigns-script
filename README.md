@@ -24,7 +24,7 @@ You can modify ftp and db configuration in src/config/config.dev.yml
 ### Execute
 Password are passed to the script while running it.
 ```
-php ./script.php ftppw=[ftpPassword] dbpw=[dataBasePassword] env=dev
+php composer.phar run ftppw=[ftpPassword] dbpw=[dataBasePassword] env=dev
 ```
 
 ### Run Tests

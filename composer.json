@@ -22,6 +22,7 @@
         "psr-4": { "Script\\": "src/" }
     },
     "scripts": {
-        "test": "./vendor/bin/phpunit --bootstrap vendor/autoload.php ./src/Tests/"
+        "test": "./vendor/bin/phpunit --bootstrap vendor/autoload.php ./src/Tests/",
+        "run": "php ./script.php"
     }
 }
