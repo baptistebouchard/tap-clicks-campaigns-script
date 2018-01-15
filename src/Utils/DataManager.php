@@ -32,10 +32,10 @@ class DataManager
     }
 
     /**
-     * @param $campaign
-     * @return ZzYashiCgn|null|object
+     * @param array $campaign
+     * @return ZzYashiCgn
      */
-    public function saveCampaign($campaign)
+    public function saveCampaign(array $campaign) : ZzYashiCgn
     {
         $campaignEntity = $this->entityManager->getRepository(ZzYashiCgn::class)->findOneBy([
             'yashiCampaignId' => $campaign['campaignId']
@@ -58,11 +58,10 @@ class DataManager
     }
 
     /**
-     * @param $campaign
-     * @param $campaignEntity
-     * @return ZzYashiCgnData|null|object
+     * @param array $campaign
+     * @param ZzYashiCgn $campaignEntity
      */
-    public function persistCampaignData($campaign, $campaignEntity)
+    public function persistCampaignData(array $campaign, ZzYashiCgn $campaignEntity) : void
     {
         $campaignDataEntity = $this->entityManager->getRepository(ZzYashiCgnData::class)->findOneBy([
             'campaign' => $campaignEntity,
@@ -76,11 +75,11 @@ class DataManager
     }
 
     /**
-     * @param $orderData
-     * @param $campaign
-     * @return null|object|ZzYashiOrder
+     * @param array $orderData
+     * @param ZzYashiCgn $campaign
+     * @return ZzYashiOrder
      */
-    public function saveOrder($orderData, $campaign)
+    public function saveOrder(array $orderData, ZzYashiCgn $campaign) : ZzYashiOrder
     {
         $orderEntity = $this->entityManager->getRepository(ZzYashiOrder::class)->findOneBy([
             'yashiOrderId' => $orderData['orderId']
@@ -100,10 +99,10 @@ class DataManager
     }
 
     /**
-     * @param $orderData
-     * @param $orderEntity
+     * @param array $orderData
+     * @param ZzYashiOrder $orderEntity
      */
-    public function persistOrderData($orderData, $orderEntity)
+    public function persistOrderData(array $orderData, ZzYashiOrder $orderEntity) : void
     {
         $orderDataEntity = $this->entityManager->getRepository(ZzYashiOrderData::class)->findOneBy([
             'order' => $orderEntity,
@@ -117,11 +116,11 @@ class DataManager
 
 
     /**
-     * @param $creativeData
-     * @param $order
-     * @return null|object|ZzYashiCreative
+     * @param array $creativeData
+     * @param ZzYashiOrder $order
+     * @return ZzYashiCreative
      */
-    public function saveCreative($creativeData, $order)
+    public function saveCreative(array $creativeData, ZzYashiOrder $order) : ZzYashiCreative
     {
         $creativeEntity = $this->entityManager->getRepository(ZzYashiCreative::class)->findOneBy([
             'yashiCreativeId' => $creativeData['creativeId']
@@ -142,10 +141,10 @@ class DataManager
     }
 
     /**
-     * @param $creativeData
-     * @param $creativeEntity
+     * @param array $creativeData
+     * @param ZzYashiCreative $creativeEntity
      */
-    public function persistCreativeData($creativeData, $creativeEntity)
+    public function persistCreativeData(array $creativeData, ZzYashiCreative $creativeEntity) : void
     {
         $creativeDataEntity = $this->entityManager->getRepository(ZzYashiCreativeData::class)->findOneBy([
             'creative' => $creativeEntity,

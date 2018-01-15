@@ -20,20 +20,20 @@ class ServiceUtils
     ];
 
     /**
-     * @param $campaign
+     * @param array $campaign
      * @return bool
      */
-    public function isListedAdvertiser($campaign)
+    public function isListedAdvertiser(array $campaign) : bool
     {
         return in_array($campaign['advertiserId'], $this::LISTED_ADVERTISER, false);
     }
 
     /**
      * Get Files containing a Date in May 2016
-     * @param $fileNameList
+     * @param array $fileNameList
      * @return array
      */
-    public function getValidFileNames($fileNameList)
+    public function getValidFileNames(array $fileNameList) : array
     {
         $validFiles = array_filter($fileNameList, function ($fileName) {
             return strpos($fileName, $this::DATE_FILTER);

@@ -4,6 +4,8 @@ namespace Script;
 
 use FtpClient\FtpClient;
 use Monolog\Logger;
+use Script\Entities\ZzYashiCgn;
+use Script\Entities\ZzYashiOrder;
 use Script\Utils\CountManager;
 use Script\Utils\DataManager;
 use Script\Utils\ObjectMapper;
@@ -55,7 +57,7 @@ class ImportScriptCommand
     /**
      * Runs the script logic
      */
-    public function run()
+    public function run() : void
     {
         $validFileList = $this->getValidFileList();
 
@@ -75,9 +77,9 @@ class ImportScriptCommand
      * @param $stack
      * @param $fileName
      */
-    private function logFileImportIssue($stack, $fileName)
+    private function logFileImportIssue($stack, $fileName) : void
     {
-        $this->fileLogger->error($stack->getMessage(), $stack);
+        $this->fileLogger->error($stack->getMessage());
         $this->stdOutLogger->error('Failed to import file with fileName: ' . $fileName . "\n");
     }
 
@@ -87,7 +89,7 @@ class ImportScriptCommand
      * @param $path
      * @return array
      */
-    private function mapCsvFileContent($path)
+    private function mapCsvFileContent(string $path) : array
     {
         $data = [];
 
@@ -118,7 +120,7 @@ class ImportScriptCommand
      * returns all valid files.
      * @return array
      */
-    private function getValidFileList()
+    private function getValidFileList() : array
     {
         $fileNameList = $this->ftpClient->nlist($this::BASE_FTP_FOLDER);
         return $this->utils->getValidFileNames($fileNameList);
@@ -129,7 +131,7 @@ class ImportScriptCommand
      * Then Updates the campaigns counts
      * @param $groupedData
      */
-    private function generateCampaignData($groupedData)
+    private function generateCampaignData(array $groupedData) : void
     {
         forEach ($groupedData as $campaignData) {
             $this->stdOutLogger->info("Saving campaign with yashi_campaign_id: {$campaignData['data']['campaignId']}");
@@ -141,13 +143,12 @@ class ImportScriptCommand
     }
 
     /**
-     *
      * Generates the orders and cascade to creatives
      * Then Updates the campaign orders counts
-     * @param $campaignData
-     * @param $createdCampaign
+     * @param array $campaignData
+     * @param ZzYashiCgn $createdCampaign
      */
-    private function generateOrderData($campaignData, $createdCampaign)
+    private function generateOrderData(array $campaignData, ZzYashiCgn $createdCampaign) : void
     {
         forEach ($campaignData['orders'] as $orderData) {
             $this->stdOutLogger->info("Saving order with yashi_order_id: {$orderData['data']['orderId']}");
@@ -161,10 +162,10 @@ class ImportScriptCommand
     /**
      *
      * Generates the creatives
-     * @param $orderData
-     * @param $createdOrder
+     * @param array $orderData
+     * @param ZzYashiOrder $createdOrder
      */
-    private function generateCreativeData($orderData, $createdOrder)
+    private function generateCreativeData(array $orderData, ZzYashiOrder $createdOrder) : void
     {
         forEach ($orderData['creatives'] as $creativeData) {
             $this->stdOutLogger->info("Saving creative with yashi_creative_id: {$creativeData['creativeId']}");

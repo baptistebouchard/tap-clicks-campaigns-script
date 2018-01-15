@@ -17,6 +17,7 @@ use Doctrine\Common\Annotations\AnnotationRegistry;
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
+use Monolog\Logger;
 use Script\ImportScriptCommand;
 use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Yaml\Yaml;
@@ -33,10 +34,10 @@ class Setuper
 
     /**
      * Setuper constructor.
-     * @param $fileLogger
-     * @param $stdOutLogger
+     * @param Logger $fileLogger
+     * @param Logger $stdOutLogger
      */
-    public function __construct($fileLogger, $stdOutLogger)
+    public function __construct(Logger $fileLogger, Logger $stdOutLogger)
     {
         $this->fileLogger = $fileLogger;
         $this->stdOutLogger = $stdOutLogger;
@@ -47,7 +48,7 @@ class Setuper
      * @param string $env
      * @return mixed
      */
-    public function getConfig($env = 'dev')
+    public function getConfig(string $env = 'dev') : array
     {
         try {
             return Yaml::parseFile(__DIR__ . "/../Config/config.{$env}.yml");
@@ -58,10 +59,11 @@ class Setuper
     }
 
     /**
+     * @param $argv
      * @return array
      * Args Mapping
      */
-    public function getScriptArgs($argv)
+    public function getScriptArgs(array $argv) : array
     {
         $arguments = [];
 
@@ -81,7 +83,7 @@ class Setuper
      * @return FtpClient
      * @throws FtpException | InvalidArgumentException
      */
-    public function getFtpClient($arguments, $config)
+    public function getFtpClient(array $arguments, array $config) : FtpClient
     {
         if (empty($arguments['ftppw']) || empty($config['ftp'])) {
             $this->stdOutLogger->error('Invalid Ftp config!');
@@ -107,7 +109,7 @@ class Setuper
      * @return EntityManager
      * @throws ORMException | InvalidArgumentException
      */
-    public function getDoctrineEntityManager($arguments, $config)
+    public function getDoctrineEntityManager(array $arguments, array $config) : EntityManager
     {
         try {
 
@@ -140,12 +142,12 @@ class Setuper
     }
 
     /**
-     * Depency Injection for Import Script
-     * @param $ftpClient
-     * @param $entityManager
+     * Dependency Injection for Import Script
+     * @param FtpClient $ftpClient
+     * @param EntityManager $entityManager
      * @return ImportScriptCommand
      */
-    public function setupImportScripCommand($ftpClient, $entityManager)
+    public function setupImportScripCommand(FtpClient $ftpClient, EntityManager $entityManager) : ImportScriptCommand
     {
         $serviceUtils = new ServiceUtils();
         $dataUtils = new DataUtils();
@@ -166,7 +168,11 @@ class Setuper
         return $importScript;
     }
 
-    public function closeConnections($ftpClient, $entityManager)
+    /**
+     * @param $ftpClient
+     * @param $entityManager
+     */
+    public function closeConnections(FtpClient $ftpClient, EntityManager $entityManager)
     {
         $ftpClient->close();
         $this->stdOutLogger->info('ftp connection close!');

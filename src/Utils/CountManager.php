@@ -3,7 +3,9 @@
 namespace Script\Utils;
 
 use Doctrine\ORM\EntityManager;
+use Script\Entities\ZzYashiCgn;
 use Script\Entities\ZzYashiCgnData;
+use Script\Entities\ZzYashiOrder;
 use Script\Entities\ZzYashiOrderData;
 use Script\Entities\ZzYashiCreativeData;
 
@@ -28,10 +30,10 @@ class CountManager
     }
 
     /**
-     * @param $createdOrder
-     * @param $logDate
+     * @param ZzYashiOrder $createdOrder
+     * @param \DateTime $logDate
      */
-    public function updateOrderCounts($createdOrder, $logDate)
+    public function updateOrderCounts (ZzYashiOrder $createdOrder, \DateTime $logDate) : void
     {
         $counts = $this->getOrderCounts($createdOrder, $logDate);
 
@@ -47,10 +49,10 @@ class CountManager
     }
 
     /**
-     * @param $createdCampaign
-     * @param $logDate
+     * @param ZzYashiCgn $createdCampaign
+     * @param \DateTime $logDate
      */
-    public function updateCampaignCounts($createdCampaign, $logDate)
+    public function updateCampaignCounts(ZzYashiCgn $createdCampaign, \DateTime $logDate) : void
     {
         $counts = $this->getCampaignCounts($createdCampaign, $logDate);
 
@@ -74,7 +76,7 @@ class CountManager
      * @param $logDate
      * @return mixed
      */
-    public function getOrderCounts($createdOrder, $logDate)
+    public function getOrderCounts(ZzYashiOrder $createdOrder, \DateTime $logDate)
     {
         $qb = $this->entityManager->getRepository(ZzYashiCreativeData::class)->createQueryBuilder('cd');
 
@@ -104,7 +106,7 @@ class CountManager
      * @param $logDate
      * @return mixed
      */
-    public function getCampaignCounts($createdCampaign, $logDate)
+    public function getCampaignCounts(ZzYashiCgn $createdCampaign, \DateTime $logDate)
     {
         $qb = $this->entityManager->getRepository(ZzYashiOrderData::class)->createQueryBuilder('od');
 

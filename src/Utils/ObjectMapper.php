@@ -13,10 +13,10 @@ class ObjectMapper
 
     /**
      * Maps campaign data from csv row.
-     * @param $csvRow
+     * @param array $csvRow
      * @return array
      */
-    public function getCampaignFromRow($csvRow)
+    public function getCampaignFromRow(array $csvRow) : array
     {
         return [
             'date' => $this->createDateTimeFromString($csvRow[0]),
@@ -29,10 +29,10 @@ class ObjectMapper
 
     /**
      * Maps order data from csv row.
-     * @param $csvRow
+     * @param array $csvRow
      * @return array
      */
-    public function getOrderFromRow($csvRow)
+    public function getOrderFromRow(array $csvRow) : array
     {
         return [
             'date' => $this->createDateTimeFromString($csvRow[0]),
@@ -43,10 +43,10 @@ class ObjectMapper
 
     /**
      * Maps creative data from csv row.
-     * @param $csvRow
+     * @param array $csvRow
      * @return array
      */
-    public function getCreativeFromRow($csvRow)
+    public function getCreativeFromRow(array $csvRow) : array
     {
         return [
             'date' => $this->createDateTimeFromString($csvRow[0]),
@@ -64,23 +64,23 @@ class ObjectMapper
 
     /**
      * Creates Date set to 0 hours To Be able to use the date as key.
-     * @param $dateString
-     * @return bool|\DateTime
+     * @param string $dateString
+     * @return \DateTime | bool
      */
-    private function createDateTimeFromString($dateString)
+    private function createDateTimeFromString(string $dateString)
     {
         return \DateTime::createFromFormat('Y-m-d H:i:s.u', $dateString . ' 00:00:00.000000');
     }
 
     /**
      * Group Creative Data by Campaign and Order and return the group data array.
-     * @param $data
-     * @param $campaign
-     * @param $order
-     * @param $creative
-     * @return mixed
+     * @param array $data
+     * @param array $campaign
+     * @param array $order
+     * @param array $creative
+     * @return array
      */
-    public function setDataHierarchy($data, $campaign, $order, $creative)
+    public function setDataHierarchy(array $data, array $campaign, array $order, array $creative) : array
     {
         // using the unique keys campaignId and oderId
         // we map the data to avoid duplicating the campaigns and orders.

@@ -16,12 +16,13 @@ namespace Script\Utils;
 class DataUtils
 {
     /**
+     *
      * Sets Count Values To Entity CampaignData, OrderData, CreativeData
-     * @param $counts
+     * @param array $counts
      * @param $entity
      * @return mixed
      */
-    public function setEntityCounts($counts, $entity)
+    public function setEntityCounts(array $counts, $entity)
     {
         $entity->setClickCount($counts['clicks']);
         $entity->setImpressionCount($counts['impressions']);
